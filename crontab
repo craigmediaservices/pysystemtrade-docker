@@ -1,0 +1,37 @@
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+TZ=America/New_York  # Replace with your desired time zone
+
+
+# Try to retart IB Gateway periodically on weekdays incase of crash
+0,30 * * * 1-5 export DISPLAY=:2 && /bin/bash /opt/ibc/gatewaystart.sh >> /home/trader/echos/ib_gateway.txt 2>&1
+
+# Run Python script daily, log output to file in user's home directory
+00 08 * * 1-7 /usr/local/bin/python3 /home/trader/bc-utils/pst.py >> /home/trader/barchart_download.txt 2>&1
+
+
+# These are the Cron arguments Carver supplies.
+
+# Use this for stuff to run on startup
+#
+# @reboot
+#
+#
+#a
+15 00  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_stack_handler  >> /home/trader/echos/run_stack_handler.txt 2>&1
+45 00  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_capital_update  >> /home/trader/echos/run_capital_update.txt 2>&1
+05 07  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_daily_price_updates  >> /home/trader/echos/run_daily_price_updates.txt 2>&1
+05 07  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_daily_fx_and_contract_updates  >> /home/trader/echos/run_daily_fx_and_contract_updates.txt 2>&1
+00 23  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_daily_update_multiple_adjusted_prices  >> /home/trader/echos/run_daily_update_multiple_adjusted_prices.txt 2>&1
+30 20  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_systems  >> /home/trader/echos/run_systems.txt 2>&1
+45 20  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_strategy_order_generator  >> /home/trader/echos/run_strategy_order_generator.txt 2>&1
+00 21  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_cleaners  >> /home/trader/echos/run_cleaners.txt 2>&1
+15 21  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_backups  >> /home/trader/echos/run_backups_echos.txt 2>&1
+30 21  * * 1-5     /home/trader/pysystemtrade/sysproduction/linux/scripts/run_reports  >> /home/trader/echos/run_reports.txt 2>&1
+#
+# Note: $MONGO_DATA must be accessible at boot; this won't work if it's in an encrypted home folder
+
+# We don't need this one as Docker handles mongo seperately
+# @reboot          $HOME/.profile; mongod --dbpath $MONGO_DATA
+@reboot          /home/trader/pysystemtrade/sysproduction/linux/scripts/startup  >> /home/trader/echos/startup.txt 2>&1
+@reboot		 /usr/local/bin/python3 /home/trader/pysystemtrade/dashboard/app.py >> /home/trader/echos/dashboard.txt 2>&1

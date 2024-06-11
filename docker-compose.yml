@@ -1,0 +1,35 @@
+version: '3.10'
+services:
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - "2222:22"  # SSH port
+      - "5902:5902"  # VNC port
+      - "5000:5000" # pysystemtrade dashboard
+    volumes:
+      - /home/andrew/Code/Futures/pysystemtrade:/home/trader/pysystemtrade
+      - /home/andrew/Code/Futures/bc-utils:/home/trader/bc-utils
+      - /media/andrew/Backup/mongo_backup:/home/trader/mongo_backup
+      - /home/andrew/Code/Futures/data:/home/trader/data
+      - /media/andrew/VMs/pysystemtrade_backup:/home/trader/data/offsystem_backup
+      # - /home/andrew/Code/Futures/data/mongodb:/home/trader/data/mongodb  # Shared MongoDB data directory
+      # - /home/andrew/Code/Futures/data/parquet:/home/trader/parquet #Honestly not sure how the system handles this vs above
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    command: tail -f /dev/null
+  mongo:
+    image: mongo:4.4
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - /home/andrew/Code/Futures/data/mongodb:/data/db # Main mongo link
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.stats()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,3 +1,17 @@
+#Exclusive Gitignore
+pysystemtrade/
+bc-utils/
+ibc/
+.env
+combined_keys.pub
+config.ini
+ibgateway-latest-standalone-linux-x64.sh
+Updates/
+data/
+
+# Begin Python .gitignore template
+# --------------------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
