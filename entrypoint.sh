@@ -49,6 +49,11 @@ run_as_trader() {
     # Start IBC Gateway
     bash /opt/ibc/gatewaystart.sh &
 
+    #Startup for PySystemTrade and the Dashboard
+    /home/trader/pysystemtrade/sysproduction/linux/scripts/startup  >> /home/trader/echos/startup.txt 2>&1
+    /home/trader/pysystemtrade/private/dashboard >> /home/trader/echos/dashboard.txt 2>&1
+
+
     # Monitoring loop
     while true; do
 

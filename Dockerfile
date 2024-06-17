@@ -114,7 +114,7 @@ RUN mkdir -p /home/trader/echos \
              /home/trader/data/backups_csv \
              /home/trader/data/backtests \
              /home/trader/data/reports \
-             /home/trader/data/offsystem_backup
+             /home/trader/data/offsystem_backup \
              /home/trader/logs
 
 # Set the working directory to the user's pysystemtrade directory
