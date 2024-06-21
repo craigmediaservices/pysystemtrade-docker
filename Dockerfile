@@ -128,7 +128,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install requests    
     
 # Setup IB Gateway and IBC
-RUN bash /home/trader/ibgateway-latest-standalone-linux-x64.sh -dir /home/trader/Jts/ibgateway/1027 -q
+RUN bash /home/trader/ibgateway-latest-standalone-linux-x64.sh -dir /home/trader/Jts/ibgateway/1019 -q
 
 #Can we switch back?
 USER root

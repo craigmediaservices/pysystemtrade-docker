@@ -51,7 +51,7 @@ run_as_trader() {
 
     #Startup for PySystemTrade and the Dashboard
     /home/trader/pysystemtrade/sysproduction/linux/scripts/startup  >> /home/trader/echos/startup.txt 2>&1
-    /home/trader/pysystemtrade/private/dashboard >> /home/trader/echos/dashboard.txt 2>&1
+    /usr/local/bin/python3 /home/trader/pysystemtrade/dashboard/app.py >> /home/trader/echos/dashboard.txt 2>&1
 
 
     # Monitoring loop
