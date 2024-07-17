@@ -3,8 +3,8 @@ PATH=/usr/local/bin:/usr/bin:/bin
 TZ=America/New_York  # Replace with your desired time zone
 
 
-# Try to retart IB Gateway periodically on weekdays incase of crash
-0,30 * * * 1-5 export DISPLAY=:2 && /bin/bash /opt/ibc/gatewaystart.sh >> /home/trader/echos/ib_gateway.txt 2>&1
+# Gateway should auto-restart at midnight, but we try manually if there is an error
+05 00 * * 1-5 export DISPLAY=:2 && /bin/bash /opt/ibc/gatewaystart.sh >> /home/trader/echos/ib_gateway.txt 2>&1
 
 # Run Python script daily, log output to file in user's home directory
 # 00 08 * * 1-7 /usr/local/bin/python3 /home/trader/bc-utils/pst.py >> /home/trader/barchart_download.txt 2>&1
