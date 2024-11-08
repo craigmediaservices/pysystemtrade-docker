@@ -8,6 +8,7 @@ config.ini
 ibgateway-latest-standalone-linux-x64.sh
 Updates/
 data/
+.DS_Store
 
 # Begin Python .gitignore template
 # --------------------------------
